@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException , APIRouter, File, UploadFile
 import os
 import shutil
+from ..process import get_pdf_text, get_text_chunks
 
 router = APIRouter(
     prefix="/upload",
@@ -18,9 +19,12 @@ async def upload_file(file: UploadFile = File(...)):
 
     with open(os.path.join(UPLOAD_FOLDER, file.filename), "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
+    
+    # Processing of the text
+    text = get_pdf_text(file.filename)
+    chunks = get_text_chunks(text)
 
-    # Process the uploaded file (you can add your processing logic here)
 
-    return {"filename": file.filename, "message": "File uploaded successfully"}
+    return {"filename": file.filename, "message": "File uploaded successfully", "chunks": chunks}
 
 
