@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException , APIRouter, File, UploadFile
 import os
 import shutil
-from ..process import get_pdf_text, get_text_chunks
+from ..process import get_pdf_text, get_text_chunks, get_vectorstore
 
 router = APIRouter(
     prefix="/upload",
@@ -23,8 +23,10 @@ async def upload_file(file: UploadFile = File(...)):
     # Processing of the text
     text = get_pdf_text(file.filename)
     chunks = get_text_chunks(text)
+    vectorstore = get_vectorstore(chunks)
+    vectorstore.save_local("faiss_index")
+    
 
-
-    return {"filename": file.filename, "message": "File uploaded successfully", "chunks": chunks}
+    return {"filename": file.filename, "message": "File uploaded successfully"}
 
 
