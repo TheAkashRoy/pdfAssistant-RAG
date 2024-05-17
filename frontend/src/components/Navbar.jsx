@@ -22,15 +22,11 @@ const Navbar = () => {
   const uploadFile = async (file) => {
     try {
       const formData = new FormData();
-      formData.append('pdf', file);
+      formData.append('file', file);
       console.log(formData);
 
       // Replace 'your-backend-endpoint' with the actual endpoint URL
-      const response = await axios.post('http://localhost:8000/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post('http://localhost:8000/upload', formData);
 
       console.log('File uploaded successfully:', response.data);
     } catch (error) {
