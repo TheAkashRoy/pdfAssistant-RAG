@@ -7,6 +7,11 @@ const chatStore = (set) => ({
         set((state) => ({
             messages: [...state.messages, message],
         }))
+    },
+    replaceLastMessage: (message) => {
+        set((state) => ({
+            messages: state.messages.slice(0, -1).concat([message])
+        }))
     }
 })
 

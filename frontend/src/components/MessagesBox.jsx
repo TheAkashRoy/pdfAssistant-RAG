@@ -13,7 +13,7 @@ const MessagesBox = () => {
             
             index%2!=0 
             ?
-            <div key={index} className="flex p-2 bg-red-400 my-5 rounded-xl">
+            <div key={index} className="flex p-2 bg-green-200 my-5 rounded-xl">
               <div className="mx-2 my-auto"><RiRobot3Line /></div>
               <div className="break-all">{message}</div>
             </div>

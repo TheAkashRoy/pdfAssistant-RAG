@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { LuSendHorizonal } from "react-icons/lu";
 import useChatStore from '../store/chatStore';
+import axios from 'axios';
 
 const InputBox = () => {
     const [question, setQuestion] = useState("");
     const addMessage = useChatStore((state) => state.addMessage)
+    const replaceLastMessage = useChatStore((state) => state.replaceLastMessage)
 
-    const handleSendMessage = () => {
+    const handleSendMessage = async () => {
         addMessage(question);
+        try{
+            addMessage("Genearating...")
+            const response = await axios.post('http://localhost:8000/chat', { "question": question});
+            replaceLastMessage(response.data.response["content"]);
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
         setQuestion("");
     }
 
