@@ -47,4 +47,4 @@ async def userChat(query : Query):
         )
 
     res = conversation_chain({"question": query.question})
-    return {"response" : res['chat_history']}
+    return {"response" : res['chat_history'][-1]}
