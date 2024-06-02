@@ -17,9 +17,7 @@ const chatStore = (set) => ({
 
 const useChatStore = create(
     devtools(
-        persist(chatStore, {
-            name: "messages",
-        })
+        (chatStore)
     )
 )
 export default useChatStore;
